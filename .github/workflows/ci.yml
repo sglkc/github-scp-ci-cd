@@ -1,13 +1,22 @@
-name: CI
+name: CI/CD
 
 on:
   push:
   workflow_dispatch:
 
 jobs:
-  ci:
-    name: Update remote repository
+  ci/cd:
+    name: Copy repository
     runs-on: ubuntu-latest
     steps:
-      - name: Clone
+      - name: Clone repository
         uses: actions/checkout@v4
+
+      - name: Copy repository to remote
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          key: ${{ secrets.SSH_PUBLIC_KEY }}
+          username: ${{ secrets.SSH_USERNAME }}
+          host: ${{ secrets.SSH_HOST }}
+          source: "./,!.git"
+          target: /var/www/html
