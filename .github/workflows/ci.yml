@@ -15,8 +15,17 @@ jobs:
       - name: Copy repository to remote
         uses: appleboy/scp-action@v0.1.7
         with:
-          key: ${{ secrets.SSH_PUBLIC_KEY }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
           username: ${{ secrets.SSH_USERNAME }}
           host: ${{ secrets.SSH_HOST }}
           source: "./,!.git"
-          target: /var/www/html
+          target: ${{ env.PATH || '/var/www/html' }}
+
+      - name: Restart Apache
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            sudo systemctl restart apache2
