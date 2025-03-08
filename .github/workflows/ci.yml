@@ -19,7 +19,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           host: ${{ secrets.SSH_HOST }}
           source: "./,!.git"
-          target: ${{ env.PATH || '/var/www/html' }}
+          target: ${{ env.PATH || '/var/www/html/github' }}
 
       - name: Restart Apache
         uses: appleboy/ssh-action@v0.1.10
