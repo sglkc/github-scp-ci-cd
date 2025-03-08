@@ -5,7 +5,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  ci/cd:
+  ci_cd:
     name: Copy repository
     runs-on: ubuntu-latest
     steps:
